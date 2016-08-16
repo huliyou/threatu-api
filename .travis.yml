@@ -1,0 +1,36 @@
+sudo: false
+language: node_js
+node_js:
+  - "6"
+cache:
+  directories:
+    - node_modules
+env:
+  - CXX=g++-4.8
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+      - mongodb-3.2-precise
+    packages:
+      - g++-4.8
+      - mongodb-org
+      - mongodb-org-server
+      - mongodb-org-shell
+      - mongodb-org-mongos
+      - mongodb-org-tools
+
+before_script:
+  - mongo --version
+
+install:
+  - npm install
+
+script:
+  - npm run lint
+  - npm run build
+  - ls -l build/server.js
+  - npm run test-cov
+
+after_script:
+  - "npm i -g coveralls && coveralls < coverage/lcov.info"

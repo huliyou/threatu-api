@@ -1,0 +1,9 @@
+FROM node
+
+ADD package.json /src/package.json
+WORKDIR /src
+
+RUN npm set registry https://registry.npmjs.org
+RUN npm install
+RUN npm install -g nodemon
+RUN npm install -g babel-cli 
